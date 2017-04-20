@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -45,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
                     String url_string = "http://10.0.2.2:5000/api/routes/?driverid=" + driver_id;
 
-                    new getDriverRoute().execute(url_string);
+                    GetDriverRoute tempTask = new GetDriverRoute();
+
+                    tempTask.execute(url_string);
+
+                    //new GetDriverRoute().execute(url_string);
 
 
                 } catch (Exception e) {
@@ -60,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class getDriverRoute extends AsyncTask<String, Void, JSONObject> {
+    private class GetDriverRoute extends AsyncTask<String, Void, JSONObject> {
 
         @Override
         protected JSONObject doInBackground(String... urls) {
@@ -75,19 +82,19 @@ public class MainActivity extends AppCompatActivity {
 
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
 
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder builder = new StringBuilder();
 
                 String line;
 
                 while ((line = bufferedReader.readLine()) != null) {
 
-                    stringBuilder.append(line);
+                    builder.append(line);
 
                 }
 
-                String responseString = stringBuilder.toString();
+                String responseString = builder.toString();
 
-                System.out.println(responseString);
+                Gson gson = new GsonBuilder().create();
 
 
 
