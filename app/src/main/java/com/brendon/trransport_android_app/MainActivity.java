@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
                     String url_string = "http://10.0.2.2:5000/api/routes/?driverid=" + driver_id;
 
-                    GetDriverRoute tempTask = new GetDriverRoute();
+                    GetDriverRoute temptask = new GetDriverRoute();
 
-                    tempTask.execute(url_string);
+                    temptask.execute(url_string);
 
                     //new GetDriverRoute().execute(url_string);
 
@@ -95,6 +96,28 @@ public class MainActivity extends AppCompatActivity {
                 String responseString = builder.toString();
 
                 Gson gson = new GsonBuilder().create();
+
+                Order_Gson orders = gson.fromJson(responseString, Order_Gson.class);
+
+
+
+                Pickup[] pickup = orders.getPickup();
+                Delivery[] deliveries = orders.getDelivery();
+
+
+                for (int x = 0; x < pickup.length; x++) {
+
+                    Pickup pickupItems = pickup[x];
+                    System.out.println(pickupItems.getOrderNumber());
+
+                }
+
+                for (int y = 0; y < deliveries.length; y++) {
+
+                    Delivery delItems = deliveries[y];
+                    System.out.println(delItems.getOrderNumber());
+
+                }
 
 
 

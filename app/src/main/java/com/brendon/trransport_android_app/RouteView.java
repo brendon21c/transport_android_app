@@ -12,5 +12,11 @@ public class RouteView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_view);
+
+
+
+
+
+
     }
 }
