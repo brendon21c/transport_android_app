@@ -14,17 +14,22 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
 
     Button mLoginButton;
     EditText mLoginEntry;
+
+    String loginResult;
 
 
 
@@ -47,13 +52,33 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
 
-                    String url_string = "http://10.0.2.2:5000/api/routes/?driverid=" + driver_id;
+                    String url_string = "http://10.0.2.2:5000/api/driver_login/?driverid=" + driver_id;
 
-                    GetDriverRoute temptask = new GetDriverRoute();
+                    LoginDriver login = new LoginDriver();
+                    login.execute(url_string);
 
-                    temptask.execute(url_string);
+                    String result = "driving";
+                    System.out.println(result);
 
-                    //new GetDriverRoute().execute(url_string);
+                    if (result.equals(loginResult)) {
+
+                        System.out.println(driver_id + " is working.");
+
+                    }
+
+                    else {
+
+                        System.out.println(driver_id + " is not working.");
+
+                    }
+
+
+//                    String url_string = "http://10.0.2.2:5000/api/routes/?driverid=" + driver_id;
+//
+//                    GetDriverRoute temptask = new GetDriverRoute();
+//
+//                    temptask.execute(url_string);
+
 
 
                 } catch (Exception e) {
@@ -67,6 +92,58 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    private class LoginDriver extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            try {
+
+                URL url = new URL(urls[0]);
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                InputStream responseStream = connection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
+
+                StringBuilder builder = new StringBuilder();
+
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null) {
+
+                    builder.append(line);
+
+                }
+
+                String responseString = builder.toString();
+
+                return responseString;
+
+
+
+
+            } catch (Exception e) {
+
+                Log.e("error", "Error connecting to API", e);
+                e.printStackTrace();
+                System.out.println("error: " + e);
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String driving) {
+
+            loginResult = driving;
+
+        }
+    }
+
 
     private class GetDriverRoute extends AsyncTask<String, Void, JSONObject> {
 
@@ -98,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new GsonBuilder().create();
 
                 Order_Gson orders = gson.fromJson(responseString, Order_Gson.class);
-
 
 
                 Pickup[] pickup = orders.getPickup();
