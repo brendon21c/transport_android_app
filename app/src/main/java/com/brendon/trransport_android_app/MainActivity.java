@@ -1,5 +1,6 @@
 package com.brendon.trransport_android_app;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     EditText mLoginEntry;
 
     String loginResult;
+
+    private static final int DRIVER_LOGIN_CODE = 0;
+
 
 
 
@@ -62,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
 
                     if (result.equals(loginResult)) {
 
-                        System.out.println(driver_id + " is working.");
+                        Intent intent = new Intent(MainActivity.this, RouteView.class);
+                        intent.putExtra("driverID", driver_id);
+                        //intent.putExtra("driverID", driver_id);
+                        startActivityForResult(intent, DRIVER_LOGIN_CODE);
 
                     }
 
@@ -93,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    This class will call the API and see if the driver ID number matches someone who is working.
+    If they are the next page will load.
+     */
     private class LoginDriver extends AsyncTask<String, Void, String> {
 
 
@@ -211,5 +222,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
