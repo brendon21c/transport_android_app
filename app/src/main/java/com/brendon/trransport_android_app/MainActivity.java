@@ -80,14 +80,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
-//                    String url_string = "http://10.0.2.2:5000/api/routes/?driverid=" + driver_id;
-//
-//                    GetDriverRoute temptask = new GetDriverRoute();
-//
-//                    temptask.execute(url_string);
-
-
-
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -156,73 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class GetDriverRoute extends AsyncTask<String, Void, JSONObject> {
 
-        @Override
-        protected JSONObject doInBackground(String... urls) {
-
-            try {
-
-                URL url = new URL(urls[0]);
-
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                InputStream responseStream = connection.getInputStream();
-
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
-
-                StringBuilder builder = new StringBuilder();
-
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null) {
-
-                    builder.append(line);
-
-                }
-
-                String responseString = builder.toString();
-
-                Gson gson = new GsonBuilder().create();
-
-                Order_Gson orders = gson.fromJson(responseString, Order_Gson.class);
-
-
-                Pickup[] pickup = orders.getPickup();
-                Delivery[] deliveries = orders.getDelivery();
-
-
-                for (int x = 0; x < pickup.length; x++) {
-
-                    Pickup pickupItems = pickup[x];
-                    System.out.println(pickupItems.getOrderNumber());
-
-                }
-
-                for (int y = 0; y < deliveries.length; y++) {
-
-                    Delivery delItems = deliveries[y];
-                    System.out.println(delItems.getOrderNumber());
-
-                }
-
-
-
-
-            } catch (Exception e) {
-
-                Log.e("error", "Error connecting to API", e);
-                e.printStackTrace();
-                System.out.println("error: " + e);
-
-            }
-
-
-            return null;
-
-
-        }
-    }
 
 
     @Override
