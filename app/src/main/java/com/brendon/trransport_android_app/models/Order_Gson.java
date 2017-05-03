@@ -1,4 +1,4 @@
-package com.brendon.trransport_android_app;
+package com.brendon.trransport_android_app.models;
 
 /**
  * Created by Brendon on 4/26/17.
@@ -7,7 +7,7 @@ package com.brendon.trransport_android_app;
 public class Order_Gson {
 
 
-    private Delivery[] Delivery;
+    private com.brendon.trransport_android_app.models.Delivery[] Delivery;
 
     private Pickup[] Pickup;
 

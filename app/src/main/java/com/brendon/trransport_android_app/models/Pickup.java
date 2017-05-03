@@ -1,10 +1,13 @@
-package com.brendon.trransport_android_app;
+package com.brendon.trransport_android_app.models;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Brendon on 4/26/17.
  */
 
-public class Pickup extends RouteStop {
+public class Pickup extends RouteStop implements Parcelable {
 
     private String delivery_time;
 
@@ -107,4 +110,49 @@ public class Pickup extends RouteStop {
     }
 
 
+    // This section provided by http://www.parcelabler.com/
+    protected Pickup(Parcel in) {
+        delivery_time = in.readString();
+        zip_code = in.readString();
+        address = in.readString();
+        OrderNumber = in.readString();
+        customer = in.readString();
+        pickup_time = in.readString();
+        city = in.readString();
+        action = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(delivery_time);
+        dest.writeString(zip_code);
+        dest.writeString(address);
+        dest.writeString(OrderNumber);
+        dest.writeString(customer);
+        dest.writeString(pickup_time);
+        dest.writeString(city);
+        dest.writeString(action);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Pickup> CREATOR = new Parcelable.Creator<Pickup>() {
+        @Override
+        public Pickup createFromParcel(Parcel in) {
+            return new Pickup(in);
+        }
+
+        @Override
+        public Pickup[] newArray(int size) {
+            return new Pickup[size];
+        }
+    };
+
 }
+
+
+

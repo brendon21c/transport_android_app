@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.brendon.trransport_android_app.models.Delivery;
+import com.brendon.trransport_android_app.models.Order_Gson;
+import com.brendon.trransport_android_app.models.Pickup;
+import com.brendon.trransport_android_app.models.RouteStop;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class RouteView extends AppCompatActivity {
@@ -68,10 +72,10 @@ public class RouteView extends AppCompatActivity {
 
 
 
-    private class GetDriverRoute extends AsyncTask<String, Void, JSONObject> {
+    private class GetDriverRoute extends AsyncTask<String, Void, RouteStop[]> {
 
         @Override
-        protected JSONObject doInBackground(String... urls) {
+        protected RouteStop[] doInBackground(String... urls) {
 
             try {
 
@@ -103,9 +107,9 @@ public class RouteView extends AppCompatActivity {
                 Pickup[] pickup = orders.getPickup();
                 Delivery[] deliveries = orders.getDelivery();
 
-                RouteStop[] routeStops = new RouteStop[];
+                RouteStop[] routeStop = createRouteStops(pickup,deliveries);
 
-                
+                return routeStop;
 
 
 
@@ -122,5 +126,52 @@ public class RouteView extends AppCompatActivity {
 
 
         }
+
+        @Override
+        protected void onPostExecute(RouteStop[] routeStops) {
+
+            createListOfRoutes(routeStops);
+
+        }
     }
+
+
+    // Create a array of both Pickup and Delivery stops.
+    private RouteStop[] createRouteStops(Pickup[] pickups, Delivery[] deliveries) {
+
+
+        // Set a length.
+        RouteStop[] stops = new RouteStop[pickups.length + deliveries.length];
+
+        int index = 0;
+
+        for (Pickup p : pickups) {
+
+            stops[index++] = p;
+
+        }
+
+        for (Delivery d : deliveries) {
+
+            stops[index++] = d;
+
+        }
+
+        Arrays.sort(stops, new StopsSorter());
+
+        return stops;
+
+    }
+
+
+    private void createListOfRoutes(RouteStop[] routeStops) {
+
+        RouteListAdapter adapter = new RouteListAdapter(this, R.layout.route_stop_list_item);
+        adapter.addAll(routeStops);
+        mRouteList.setAdapter(adapter);
+
+        //todo add listener for clicking on adapter
+    }
+
+
 }
