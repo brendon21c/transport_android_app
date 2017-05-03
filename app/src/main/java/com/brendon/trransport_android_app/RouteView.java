@@ -103,29 +103,9 @@ public class RouteView extends AppCompatActivity {
                 Pickup[] pickup = orders.getPickup();
                 Delivery[] deliveries = orders.getDelivery();
 
+                RouteStop[] routeStops = new RouteStop[];
 
-                for (int x = 0; x < pickup.length; x++) {
-
-                    Pickup pickupItems = pickup[x];
-
-                    mRouteHash.put("Order Number", pickupItems.getOrderNumber());
-                    mRouteHash.put("Customer", pickupItems.getCustomer());
-                    mRouteHash.put("Address", pickupItems.getAddress());
-                    mRouteHash.put("City", pickupItems.getCity());
-                    mRouteHash.put("Zip Code", pickupItems.getZip_code());
-                    mRouteHash.put("Pickup Time", pickupItems.getPickup_time());
-
-
-
-                }
-
-                for (int y = 0; y < deliveries.length; y++) {
-
-                    Delivery delItems = deliveries[y];
-                    System.out.println(delItems.getOrderNumber());
-
-                }
-
+                
 
 
 

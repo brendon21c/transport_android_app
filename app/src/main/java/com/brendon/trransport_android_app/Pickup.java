@@ -4,7 +4,7 @@ package com.brendon.trransport_android_app;
  * Created by Brendon on 4/26/17.
  */
 
-public class Pickup {
+public class Pickup extends RouteStop {
 
     private String delivery_time;
 
@@ -19,6 +19,8 @@ public class Pickup {
     private String pickup_time;
 
     private String city;
+
+    private String action;
 
     public String getDelivery_time ()
     {
@@ -88,6 +90,14 @@ public class Pickup {
     public void setCity (String city)
     {
         this.city = city;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     @Override
