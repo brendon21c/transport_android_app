@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,16 +29,17 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class RouteView extends AppCompatActivity {
+public class RouteActivity extends AppCompatActivity {
 
     TextView mDriverInstructions;
     Button mOrderDetailsButton;
     Button mGPSButton;
     ListView mRouteList;
 
-    ArrayAdapter mRouteAdapter;
 
     HashMap<String,String> mRouteHash;
+
+    int mDriverID;
 
 
 
@@ -58,7 +61,7 @@ public class RouteView extends AppCompatActivity {
 
         int driver_id = intent.getIntExtra("driverID", 0);
 
-        System.out.println(driver_id);
+        mDriverID = driver_id; // Assigning to Global variable so that it can be passed to OrderStopActivity.
 
         String url_string = "http://10.0.2.2:5000/api/routes/?driverid=" + String.valueOf(driver_id);
 
@@ -66,9 +69,20 @@ public class RouteView extends AppCompatActivity {
 
         temptask.execute(url_string);
 
+        mOrderDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                onPause();
+
+            }
+        });
 
 
     }
+
+
 
 
 
@@ -103,7 +117,6 @@ public class RouteView extends AppCompatActivity {
 
                 Order_Gson orders = gson.fromJson(responseString, Order_Gson.class);
 
-                //TODO I need to figure out how to use a GSON with a listadapter, I don't think a HashMap will work.
                 Pickup[] pickup = orders.getPickup();
                 Delivery[] deliveries = orders.getDelivery();
 
@@ -116,8 +129,7 @@ public class RouteView extends AppCompatActivity {
             } catch (Exception e) {
 
                 Log.e("error", "Error connecting to API", e);
-                e.printStackTrace();
-                System.out.println("error: " + e);
+
 
             }
 
@@ -166,12 +178,54 @@ public class RouteView extends AppCompatActivity {
 
     private void createListOfRoutes(RouteStop[] routeStops) {
 
-        RouteListAdapter adapter = new RouteListAdapter(this, R.layout.route_stop_list_item);
+        final RouteListAdapter adapter = new RouteListAdapter(this, R.layout.route_stop_list_item);
         adapter.addAll(routeStops);
         mRouteList.setAdapter(adapter);
 
-        //todo add listener for clicking on adapter
+
+        mRouteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // Collect "Stop" information and pass to order processing screen.
+                RouteStop selection = adapter.getItem(position);
+
+                Intent intent = new Intent(RouteActivity.this, OrderStopActivity.class);
+                intent.putExtra("stop", selection);
+                intent.putExtra("driver", mDriverID);
+                startActivityForResult(intent,RESULT_OK);
+
+            }
+        });
+
+
+
     }
 
 
+    // Download and update Listview when Activity restarts.
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String url_string = "http://10.0.2.2:5000/api/routes/?driverid=" + String.valueOf(mDriverID);
+
+        GetDriverRoute temptask = new GetDriverRoute();
+
+        temptask.execute(url_string);
+
+
+    }
+
+    // TODO not sure if this the best way to do this, but I want to add a timer to manually call this to update the route.
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        System.out.println("paused");
+
+        onResume();
+    }
 }
+
+

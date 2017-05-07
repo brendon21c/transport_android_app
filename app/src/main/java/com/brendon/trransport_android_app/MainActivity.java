@@ -8,21 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONObject;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     EditText mLoginEntry;
 
     String loginResult;
+
+    int mDriverID;
 
     private static final int DRIVER_LOGIN_CODE = 0;
 
@@ -47,43 +41,30 @@ public class MainActivity extends AppCompatActivity {
         mLoginButton = (Button) findViewById(R.id.driver_login_button);
         mLoginEntry = (EditText) findViewById(R.id.driver_id_entry);
 
+
+
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                int driver_id = Integer.parseInt(mLoginEntry.getText().toString());
+                //int driver_id = Integer.parseInt(mLoginEntry.getText().toString());
+
+                mDriverID = Integer.parseInt(mLoginEntry.getText().toString());
+
 
                 try {
 
-                    String url_string = "http://10.0.2.2:5000/api/driver_login/?driverid=" + driver_id;
+                    String url_string = "http://10.0.2.2:5000/api/driver_login/?driverid=" + mDriverID;
 
                     LoginDriver login = new LoginDriver();
                     login.execute(url_string);
 
-                    String result = "driving";
-                    System.out.println(result);
-
-                    if (result.equals(loginResult)) {
-
-                        Intent intent = new Intent(MainActivity.this, RouteView.class);
-                        intent.putExtra("driverID", driver_id);
-                        //intent.putExtra("driverID", driver_id);
-                        startActivityForResult(intent, DRIVER_LOGIN_CODE);
-
-                    }
-
-                    else {
-
-                        System.out.println(driver_id + " is not working.");
-
-                    }
-
 
                 } catch (Exception e) {
 
-                    e.printStackTrace();
-                    System.out.println("error: " + e);
+                    Log.e("error", "Error logging in Driver", e);
+
                 }
 
 
@@ -142,19 +123,24 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String driving) {
 
-            loginResult = driving;
+
+            if (driving.equalsIgnoreCase("driving")) {
+
+                Intent intent = new Intent(MainActivity.this, RouteActivity.class);
+                intent.putExtra("driverID", mDriverID);
+                startActivityForResult(intent, DRIVER_LOGIN_CODE);
+
+            }
+
+            // Currently the program will only allow "working" drivers to log in.
+            else {
+
+                Toast.makeText(MainActivity.this, mDriverID + " is not working.", Toast.LENGTH_LONG).show();
+
+            }
 
         }
     }
 
 
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }

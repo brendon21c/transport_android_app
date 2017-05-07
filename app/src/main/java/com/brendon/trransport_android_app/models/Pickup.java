@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Brendon on 4/26/17.
  */
 
-public class Pickup extends RouteStop implements Parcelable {
+public class Pickup extends RouteStop {
 
     private String delivery_time;
 
@@ -24,6 +24,9 @@ public class Pickup extends RouteStop implements Parcelable {
     private String city;
 
     private String action;
+
+
+
 
     public String getDelivery_time ()
     {
@@ -153,6 +156,7 @@ public class Pickup extends RouteStop implements Parcelable {
     };
 
 }
+
 
 
 

@@ -17,7 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".RouteView">
+        <activity android:name=".RouteActivity">
+        </activity>
+        <activity android:name=".OrderStopActivity">
         </activity>
     </application>
 

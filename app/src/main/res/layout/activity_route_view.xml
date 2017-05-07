@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context="com.brendon.trransport_android_app.RouteView">
+    tools:context="com.brendon.trransport_android_app.RouteActivity">
 
     <RelativeLayout
         android:id="@+id/main_header"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text|textMultiLine"
-            android:text="These are your current routes. Drive safetly, remember your SMITH system training."
+            android:text="These are your current routes. Drive safetly, remember your SMITH system training. Blue is for Pickup, Green for Delivery and Grey means Completed."
             android:textSize="18sp"/>
 
     </RelativeLayout>

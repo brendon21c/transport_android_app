@@ -13,18 +13,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/driver_id_entry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberPassword"/>
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/driver_login_button"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/driver_id_entry"
-            android:text="Button"/>
+            android:layout_above="@+id/bottom"
+            android:layout_below="@+id/top">
+
+            <Button
+                android:id="@+id/driver_login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/driver_id_entry"
+                android:layout_centerInParent="true"
+                android:padding="10dp"
+                android:text="Login"/>
+
+            <EditText
+                android:id="@+id/driver_id_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:ems="10"
+                android:inputType="numberPassword"
+                android:padding="10dp"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

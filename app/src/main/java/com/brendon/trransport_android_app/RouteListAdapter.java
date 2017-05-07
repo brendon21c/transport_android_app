@@ -2,6 +2,7 @@ package com.brendon.trransport_android_app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -50,19 +51,54 @@ public class RouteListAdapter extends ArrayAdapter<RouteStop> {
 
         RouteStop stop = getItem(position);
 
-        TextView deliveryOrPickup = (TextView) view.findViewById(R.id.delivery_or_pickup);
+        TextView customer_label = (TextView) view.findViewById(R.id.customer_label);
+        TextView customer = (TextView) view.findViewById(R.id.customer);
+        TextView order_label = (TextView) view.findViewById(R.id.order_number_label);
+        TextView order_number = (TextView) view.findViewById(R.id.order_number);
+        TextView address_label = (TextView) view.findViewById(R.id.address_label);
         TextView address = (TextView) view.findViewById(R.id.address);
 
         if (stop instanceof Pickup) {
 
-            deliveryOrPickup.setText("Pickup");
-            address.setText(((Pickup) stop).getAddress());
+            if (((Pickup) stop).getAction().equalsIgnoreCase("complete")) {
+
+                customer.setText(((Pickup) stop).getCustomer());
+                order_number.setText(((Pickup) stop).getOrderNumber());
+                address.setText(((Pickup) stop).getAddress());
+                view.setBackgroundColor(Color.LTGRAY);
+
+
+            } else {
+
+                customer.setText(((Pickup) stop).getCustomer());
+                order_number.setText(((Pickup) stop).getOrderNumber());
+                address.setText(((Pickup) stop).getAddress());
+                view.setBackgroundColor(Color.CYAN);
+
+
+            }
+
         }
 
         else if (stop instanceof Delivery) {
 
-            deliveryOrPickup.setText("Delivery");
-            address.setText(((Delivery) stop).getAddress());
+            if (((Delivery) stop).getAction().equalsIgnoreCase("complete")) {
+
+                customer.setText(((Delivery) stop).getCustomer());
+                order_number.setText(((Delivery) stop).getOrderNumber());
+                address.setText(((Delivery) stop).getAddress());
+                view.setBackgroundColor(Color.LTGRAY);
+
+
+            } else {
+
+                customer.setText(((Delivery) stop).getCustomer());
+                order_number.setText(((Delivery) stop).getOrderNumber());
+                address.setText(((Delivery) stop).getAddress());
+
+                view.setBackgroundColor(Color.GREEN);
+
+            }
 
         }
 

@@ -4,15 +4,49 @@
               android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/delivery_or_pickup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:id="@+id/customer_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Customer: "
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/customer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/customer_label"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/order_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/customer_label"
+        android:text="Order Number:"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/order_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/customer"
+        android:layout_toRightOf="@+id/order_number_label"/>
+
+    <TextView
+        android:id="@+id/address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_number_label"
+        android:text="Address:"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_below="@+id/order_number"
+        android:layout_toRightOf="@+id/address_label"
+        android:textSize="18sp"/>
+
 
 </RelativeLayout>
