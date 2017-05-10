@@ -32,8 +32,7 @@ import java.util.HashMap;
 public class RouteActivity extends AppCompatActivity {
 
     TextView mDriverInstructions;
-    Button mOrderDetailsButton;
-    Button mGPSButton;
+    Button mRefresh;
     ListView mRouteList;
 
 
@@ -51,8 +50,7 @@ public class RouteActivity extends AppCompatActivity {
 
 
         mDriverInstructions = (TextView) findViewById(R.id.route_instructions);
-        mOrderDetailsButton = (Button) findViewById(R.id.access_stop);
-        mGPSButton = (Button) findViewById(R.id.gps_button);
+        mRefresh = (Button) findViewById(R.id.refresh_list);
         mRouteList = (ListView) findViewById(R.id.route_list_view);
 
         mRouteHash = new HashMap<String, String>();
@@ -69,7 +67,8 @@ public class RouteActivity extends AppCompatActivity {
 
         temptask.execute(url_string);
 
-        mOrderDetailsButton.setOnClickListener(new View.OnClickListener() {
+        // Pauses program to update list... Hopefully.
+        mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -112,6 +111,7 @@ public class RouteActivity extends AppCompatActivity {
                 }
 
                 String responseString = builder.toString();
+
 
                 Gson gson = new GsonBuilder().create();
 
@@ -175,7 +175,7 @@ public class RouteActivity extends AppCompatActivity {
 
     }
 
-
+    // Called on postExecute when the program makes a api request. This sets the list adapter for the current jobs.
     private void createListOfRoutes(RouteStop[] routeStops) {
 
         final RouteListAdapter adapter = new RouteListAdapter(this, R.layout.route_stop_list_item);
@@ -183,6 +183,7 @@ public class RouteActivity extends AppCompatActivity {
         mRouteList.setAdapter(adapter);
 
 
+        // Starts the Activity for completing a stop.
         mRouteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -217,7 +218,7 @@ public class RouteActivity extends AppCompatActivity {
 
     }
 
-    // TODO not sure if this the best way to do this, but I want to add a timer to manually call this to update the route.
+    //not sure if this the best way to do this, but this is allowing the user to click a button and refresh the list on demand.
     @Override
     protected void onPause() {
         super.onPause();

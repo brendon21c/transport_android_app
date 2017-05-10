@@ -30,19 +30,12 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/access_stop"
+            android:id="@+id/refresh_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Access Route"/>
+            android:text="Refresh List"/>
 
-        <Button
-            android:id="@+id/gps_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/access_stop"
-            android:padding="10dp"
-            android:text="GPS"/>
     </RelativeLayout>
 
     <RelativeLayout

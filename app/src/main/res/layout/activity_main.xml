@@ -19,6 +19,14 @@
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/driver_login_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:text="Please enter your driver number to log in to the system and access your routes."
+                android:textSize="24sp"/>
         </LinearLayout>
 
         <RelativeLayout

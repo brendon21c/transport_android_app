@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String driving) {
 
 
-            if (driving.equalsIgnoreCase("driving")) {
+            if (driving.equalsIgnoreCase("True")) {
 
                 Intent intent = new Intent(MainActivity.this, RouteActivity.class);
                 intent.putExtra("driverID", mDriverID);
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             // Currently the program will only allow "working" drivers to log in.
             else {
 
-                Toast.makeText(MainActivity.this, mDriverID + " is not working.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, mDriverID + " is not a valid driver number.", Toast.LENGTH_LONG).show();
 
             }
 
