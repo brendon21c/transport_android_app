@@ -26,7 +26,7 @@ As mentioned before all data is entered into the system via the Tranportation si
 
 ## Log in Screen
 
-<img width="382" alt="screen shot 2017-05-10 at 11 38 15 am" src="https://cloud.githubusercontent.com/assets/10622937/25910613/89ccc46e-3576-11e7-9fe2-2cfb6903f803.png">
+<img width="394" alt="screen shot 2017-05-10 at 11 37 57 am" src="https://cloud.githubusercontent.com/assets/10622937/25910615/89d7dea8-3576-11e7-8680-f75cf2137c3b.png">
 
 ## Route Screen
 
@@ -34,7 +34,7 @@ As mentioned before all data is entered into the system via the Tranportation si
 
 ## Details Screen
 
-<img width="394" alt="screen shot 2017-05-10 at 11 37 57 am" src="https://cloud.githubusercontent.com/assets/10622937/25910615/89d7dea8-3576-11e7-8680-f75cf2137c3b.png">
+<img width="382" alt="screen shot 2017-05-10 at 11 38 15 am" src="https://cloud.githubusercontent.com/assets/10622937/25910613/89ccc46e-3576-11e7-9fe2-2cfb6903f803.png">
 
 
 
